@@ -21,5 +21,8 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Vshader">
+      <Filter>Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
