@@ -21,8 +21,16 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Vshader">
+    <ClCompile Include="default.vs">
       <Filter>Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="default.frag">
+      <Filter>Shaders</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
