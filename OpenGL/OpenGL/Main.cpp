@@ -3,7 +3,7 @@
 // GLEW
 #define GLEW_STATIC
 #include <GL/glew.h>
-
+#include <math.h>
 // GLFW
 #include <GLFW/glfw3.h>
 
@@ -12,7 +12,7 @@
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 static void window_callback(GLFWwindow* window, int w, int h);
 GLuint VBO, VBO2, VAO, VAO2;
-GLuint * pVAO= new GLuint (0);
+GLuint * pVAO = new GLuint(0);
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
 
@@ -25,9 +25,10 @@ const GLchar* vertexShaderSource = "#version 330 core\n"
 "}\0";
 const GLchar* fragmentShaderSource = "#version 330 core\n"
 "out vec4 color;\n"
+"uniform vec4 ourcolor; \n"
 "void main()\n"
 "{\n"
-"color = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+"color = ourcolor;  // vec4(1.0f, 0.5f, 0.2f, 1.0f); \n"
 "}\n\0";
 
 const GLchar* fragmentShaderSource2 = "#version 330 core\n"
@@ -55,14 +56,12 @@ GLuint indices2[] =
 {
 	0 ,3,1,
 	1, 0 ,2,
-	 
+
 };
 // The MAIN function, from here we start the application and run the game loop
 int main()
 {
-	GLint nrattributes;
-	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrattributes);
-	std::cout << nrattributes;
+	
 	// Init GLFW
 	glfwInit();
 	// Set all the required options for GLFW
@@ -83,7 +82,9 @@ int main()
 	glewExperimental = GL_TRUE;
 	// Initialize GLEW to setup the OpenGL Function pointers
 	glewInit();
-
+	GLint nrattributes;
+	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrattributes);
+	std::cout << nrattributes;
 	// Define the viewport dimensions
 	glViewport(0, 0, WIDTH, HEIGHT);
 
@@ -152,7 +153,7 @@ int main()
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 
-	
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	// Bind the Vertex Array Object first, then bind and set vertex buffer(s) and attribute pointer(s).
@@ -189,6 +190,7 @@ int main()
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 
 						  // Game loop
+	GLint colorlocation = glGetUniformLocation(shaderProgram, "ourcolor");
 	while (!glfwWindowShouldClose(window))
 	{
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
@@ -200,17 +202,22 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// Draw our first triangle
-		glUseProgram(shaderProgram);
+		
+	 	glUseProgram(shaderProgram);
+		glUniform4f(colorlocation, (std::sin(glfwGetTime()) / 2) + 0.5,
+			(std::cos(glfwGetTime()) / 2) + 0.5,
+			(std::sin(glfwGetTime()) / 2) + 0.5,
+			(std::sin(glfwGetTime()) / 2) + 0.5);
 		glBindVertexArray(*pVAO);
-		if (pVAO==&VAO)
+		if (pVAO == &VAO)
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		else {
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-			 glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // this drwas based on indices
-			glDrawArrays(GL_TRIANGLES, 0,9);// it dosent dars the 2 triangels!! we need to call 
-			//glDrawElements. so althout EBO is binded to VAO2 but just callign VAO2 dosnt drwas usisng EBO
+			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); // this drwas based on indices
+			glDrawArrays(GL_TRIANGLES, 0, 9);// it dosent dars the 2 triangels!! we need to call 
+											 //glDrawElements. so althout EBO is binded to VAO2 but just callign VAO2 dosnt drwas usisng EBO
 		}
-		
+
 		glBindVertexArray(0);
 
 		// Swap the screen buffers
@@ -231,8 +238,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
-	if(key==GLFW_KEY_2)
-		pVAO =&VAO2;
+	if (key == GLFW_KEY_2)
+		pVAO = &VAO2;
 	if (key == GLFW_KEY_1)
 		pVAO = &VAO;
 	if (key == GLFW_KEY_O)
