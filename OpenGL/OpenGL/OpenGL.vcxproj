@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\GLFW;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\GLFW\GLFW;C:\GLFW\GL;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\qnb10200.AFRC-FDCPB62\Source\Repos\OpenGL_Learning\OpenGL\OpenGL;C:\GLFW\GLFW;C:\GLFW\GL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -94,7 +94,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32s.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -160,22 +160,10 @@
     <ClCompile Include="default.vs">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="src\image_DXT.c" />
-    <ClCompile Include="src\image_helper.c" />
-    <ClCompile Include="src\SOIL.c" />
-    <ClCompile Include="src\stb_image_aug.c" />
-    <ClCompile Include="src\test_SOIL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="src\image_DXT.h" />
-    <ClInclude Include="src\image_helper.h" />
     <ClInclude Include="src\SOIL.h" />
-    <ClInclude Include="src\stbi_DDS_aug.h" />
-    <ClInclude Include="src\stbi_DDS_aug_c.h" />
-    <ClInclude Include="src\stb_image_aug.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

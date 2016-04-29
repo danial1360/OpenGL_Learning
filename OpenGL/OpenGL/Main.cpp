@@ -48,7 +48,7 @@ int main()
 
 
 	// Build and compile our shader program
-	Shader ourShader("textures.vs", "textures.frag");
+	Shader ourShader("default.vs", "default.frag");
 
 
 	// Set up vertex data (and buffer(s)) and attribute pointers

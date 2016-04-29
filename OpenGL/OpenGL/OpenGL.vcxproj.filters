@@ -27,42 +27,12 @@
     <ClCompile Include="default.frag">
       <Filter>Shaders</Filter>
     </ClCompile>
-    <ClCompile Include="src\image_DXT.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\image_helper.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SOIL.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stb_image_aug.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\test_SOIL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\image_DXT.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\image_helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\SOIL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_image_aug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stbi_DDS_aug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stbi_DDS_aug_c.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
