@@ -21,12 +21,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="default.vs">
-      <Filter>Shaders</Filter>
-    </ClCompile>
-    <ClCompile Include="default.frag">
-      <Filter>Shaders</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -35,5 +29,13 @@
     <ClInclude Include="src\SOIL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="default.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="default.vs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
