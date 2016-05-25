@@ -160,8 +160,8 @@
     <ClInclude Include="src\SOIL.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="default.frag" />
-    <None Include="default.vs" />
+    <None Include="shader.frag" />
+    <None Include="shader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
