@@ -8,7 +8,11 @@
 #include <GLFW/glfw3.h>
 
 // Other Libs
-#include "src\SOIL.h"
+#include "src\\SOIL.h"
+// GLM Mathematics
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 // Other includes
 #include "Shader.h"
@@ -48,7 +52,6 @@ int main()
 
 
 	// Build and compile our shader program
-	
 	Shader ourShader("default.vs", "default.frag");
 
 
@@ -141,8 +144,6 @@ int main()
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		// Activate shader
-		ourShader.Use();
 
 		// Bind Textures using texture units
 		glActiveTexture(GL_TEXTURE0);
@@ -151,6 +152,18 @@ int main()
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, texture2);
 		glUniform1i(glGetUniformLocation(ourShader.Program, "ourTexture2"), 1);
+
+		// Activate shader
+		ourShader.Use();
+
+		// Create transformations
+		glm::mat4 transform;
+		transform = glm::translate(transform, glm::vec3(0.5f, -0.5f, 0.0f));
+		transform = glm::rotate(transform, (GLfloat)glfwGetTime() * 50.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		// Get matrix's uniform location and set matrix
+		GLint transformLoc = glGetUniformLocation(ourShader.Program, "transform");
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
 		// Draw container
 		glBindVertexArray(VAO);
