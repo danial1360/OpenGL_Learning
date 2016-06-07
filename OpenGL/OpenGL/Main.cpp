@@ -16,6 +16,7 @@
 
 // Other includes
 #include "Shader.h"
+ 
 
 
 // Function prototypes
@@ -50,7 +51,6 @@ int main()
 	// Define the viewport dimensions
 	glViewport(0, 0, WIDTH, HEIGHT);
 
-	// Setup OpenGL options
 	glEnable(GL_DEPTH_TEST);
 
 
@@ -102,7 +102,6 @@ int main()
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-	// World space positions of our cubes
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f,  0.0f,  0.0f),
 		glm::vec3(2.0f,  5.0f, -15.0f),
@@ -197,18 +196,21 @@ int main()
 		// Activate shader
 		ourShader.Use();
 
-		// Create transformations
+		// Camera/View transformation
 		glm::mat4 view;
+		GLfloat radius = 10.50f;
+		GLfloat camX = sin(glfwGetTime()) * radius;
+		GLfloat camZ = cos(glfwGetTime()) * radius;
+		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		// Projection 
 		glm::mat4 projection;
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		projection = glm::perspective(45.0f, (1+sin((GLfloat)glfwGetTime()) * 3)  , 0.1f, 100.0f);
-		// Get their uniform location
+		projection = glm::perspective(45.0f, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+		// Get the uniform locations
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
 		GLint projLoc = glGetUniformLocation(ourShader.Program, "projection");
 		// Pass the matrices to the shader
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		// Note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 		glBindVertexArray(VAO);
