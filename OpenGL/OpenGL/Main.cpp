@@ -200,8 +200,8 @@ int main()
 		// Create transformations
 		glm::mat4 view;
 		glm::mat4 projection;
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		projection = glm::perspective(45.0f, (1+sin((GLfloat)glfwGetTime()) * 3)  , 0.1f, 100.0f);
+		view = glm::translate(view, glm::vec3((1 + sin((GLfloat)glfwGetTime()) * 3), 0.0f, -1*(1 + sin((GLfloat)glfwGetTime()) * 3))) ;
+		projection = glm::perspective(45.0f, (GLfloat)3  , 0.1f, 100.0f);
 		// Get their uniform location
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
