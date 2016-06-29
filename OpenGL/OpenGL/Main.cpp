@@ -11,7 +11,7 @@
 // Other Libs
 #include "src\SOIL.h"
 // GLM Mathematics
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
@@ -78,8 +78,8 @@ int main()
 
 
 	// Build and compile our shader program
-	Shader lightingShader("path/to/shaders/lighting.vs", "path/to/shaders/lighting.frag");
-	Shader lampShader("path/to/shaders/lamp.vs", "path/to/shaders/lamp.frag");
+	Shader lightingShader("lighting.vs", "lighting.frag");
+	Shader lampShader("lamp.vs", "lamp.frag");
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] = {
@@ -176,7 +176,7 @@ int main()
 	int width, height;
 	unsigned char* image;
 	// Diffuse map
-	image = SOIL_load_image("container2.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("container.png", &width, &height, 0, SOIL_LOAD_RGB);
 	glBindTexture(GL_TEXTURE_2D, diffuseMap);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -186,7 +186,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	// Specular map
-	image = SOIL_load_image("container2_specular.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("container_specular.png", &width, &height, 0, SOIL_LOAD_RGB);
 	glBindTexture(GL_TEXTURE_2D, specularMap);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
