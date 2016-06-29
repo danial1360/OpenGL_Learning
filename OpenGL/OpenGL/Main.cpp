@@ -11,13 +11,14 @@
 // Other Libs
 #include "src\SOIL.h"
 // GLM Mathematics
-#include "glm/glm.hpp"
+#include <glm/glm.hpp>
 #include "glm/gtc/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
 // Other includes
 #include "Shader.h"
 #include "Camera.h"
+
 
 // Function prototypes
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -77,8 +78,8 @@ int main()
 
 
 	// Build and compile our shader program
-	Shader lightingShader("lighting.vs", "lighting.frag");
-	Shader lampShader("lamp.vs", "lamp.frag");
+	Shader lightingShader("path/to/shaders/lighting.vs", "path/to/shaders/lighting.frag");
+	Shader lampShader("path/to/shaders/lamp.vs", "path/to/shaders/lamp.frag");
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] = {
@@ -175,7 +176,7 @@ int main()
 	int width, height;
 	unsigned char* image;
 	// Diffuse map
-	image = SOIL_load_image("container.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("container2.png", &width, &height, 0, SOIL_LOAD_RGB);
 	glBindTexture(GL_TEXTURE_2D, diffuseMap);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -185,7 +186,7 @@ int main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST_MIPMAP_NEAREST);
 	// Specular map
-	image = SOIL_load_image("container_specular.bmp", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("container2_specular.png", &width, &height, 0, SOIL_LOAD_RGB);
 	glBindTexture(GL_TEXTURE_2D, specularMap);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
@@ -222,16 +223,23 @@ int main()
 
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
-		//GLint lightPosLoc = glGetUniformLocation(lightingShader.Program, "light.position");
-		GLint lightDirLoc = glGetUniformLocation(lightingShader.Program, "light.direction");
+		GLint lightPosLoc = glGetUniformLocation(lightingShader.Program, "light.position");
+		GLint lightSpotdirLoc = glGetUniformLocation(lightingShader.Program, "light.direction");
+		GLint lightSpotCutOffLoc = glGetUniformLocation(lightingShader.Program, "light.cutOff");
 		GLint viewPosLoc = glGetUniformLocation(lightingShader.Program, "viewPos");
-		//glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
-		glUniform3f(lightDirLoc, -0.2f, -1.0f, -0.3f);
+		glUniform3f(lightPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
+		glUniform3f(lightSpotdirLoc, camera.Front.x, camera.Front.y, camera.Front.z);
+		glUniform1f(lightSpotCutOffLoc, glm::cos(glm::radians(12.5f)));
 		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
 		// Set lights properties
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.2f, 0.2f, 0.2f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "light.ambient"), 0.1f, 0.1f, 0.1f);
+		// We set the diffuse intensity a bit higher; note that the right lighting conditions differ with each lighting method and environment.
+		// Each environment and lighting type requires some tweaking of these variables to get the best out of your environment.
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "light.diffuse"), 0.8f, 0.8f, 0.8f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "light.specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "light.constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "light.linear"), 0.09);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "light.quadratic"), 0.032);
 		// Set material properties
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 32.0f);
 
@@ -277,9 +285,8 @@ int main()
 		glBindVertexArray(0);
 
 
-		// A lamp object is a bit useless with a directional light since it has no origin.
-		// 
-		//// Also draw the lamp object, again binding the appropriate shader
+		// Again, no need to draw the lamp object
+		// Also draw the lamp object, again binding the appropriate shader
 		//lampShader.Use();
 		//// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
 		//modelLoc = glGetUniformLocation(lampShader.Program, "model");
