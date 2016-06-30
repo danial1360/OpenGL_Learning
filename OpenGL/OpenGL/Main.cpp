@@ -3,10 +3,10 @@
 
 // GLEW
 #define GLEW_STATIC
-#include <GL/glew.h>
+#include "GL/glew.h"
 
 // GLFW
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 // GL includes
 #include "Shader.h"
@@ -74,7 +74,7 @@ int main()
 	Shader shader("lighting.vs", "lighting.frag");
 
 	// Load models
-	Model ourModel("Nanosuit/nanosuit.obj");
+	Model ourModel("Nanosuit/nanosuit2.obj");
 
 	// Draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
