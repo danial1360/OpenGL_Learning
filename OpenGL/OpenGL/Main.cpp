@@ -3,10 +3,10 @@
 
 // GLEW
 #define GLEW_STATIC
-#include "GL/glew.h"
+#include <GL/glew.h>
 
 // GLFW
-#include "GLFW/glfw3.h"
+#include <GLFW/glfw3.h>
 
 // GL includes
 #include "Shader.h"
@@ -19,7 +19,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 // Other Libs
-#include  "src\SOIL.h"
+#include "src\SOIL.h"
 
 // Properties
 GLuint screenWidth = 800, screenHeight = 600;
@@ -39,7 +39,7 @@ bool firstMouse = true;
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
 
-// The MAIN function, from here we start our application and run our Game loop
+// The MAIN function, from here we start our application and run the Game loop
 int main()
 {
 	// Init GLFW
@@ -72,12 +72,21 @@ int main()
 
 	// Setup and compile our shaders
 	Shader shader("lighting.vs", "lighting.frag");
+	Shader lampShader("lamp.vs", "lamp.frag");
 
 	// Load models
-	Model ourModel("Nanosuit/Nanosuit.obj");
+	Model ourModel("Nanosuit/nanosuit.obj");
+	// Used a lamp object here. Find one yourself on the internet, or create your own one ;) (or be oldschool and set the VBO and VAO yourselves)
+	Model lightBulb("Lamps/Light Bulb.obj");
 
 	// Draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	// Point light positions
+	glm::vec3 pointLightPositions[] = {
+		glm::vec3(2.3f, -1.6f, -3.0f),
+		glm::vec3(-1.7f, 0.9f, 1.0f)
+	};
 
 	// Game loop
 	while (!glfwWindowShouldClose(window))
@@ -102,12 +111,44 @@ int main()
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
 
+		// Set the lighting uniforms
+		glUniform3f(glGetUniformLocation(shader.Program, "viewPos"), camera.Position.x, camera.Position.y, camera.Position.z);
+		// Point light 1
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[0].ambient"), 0.05f, 0.05f, 0.05f);
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[0].diffuse"), 1.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(shader.Program, "pointLights[0].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(shader.Program, "pointLights[0].linear"), 0.009);
+		glUniform1f(glGetUniformLocation(shader.Program, "pointLights[0].quadratic"), 0.0032);
+		// Point light 2
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[1].ambient"), 0.05f, 0.05f, 0.05f);
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[1].diffuse"), 1.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(shader.Program, "pointLights[1].specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(shader.Program, "pointLights[1].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(shader.Program, "pointLights[1].linear"), 0.009);
+		glUniform1f(glGetUniformLocation(shader.Program, "pointLights[1].quadratic"), 0.0032);
+
 		// Draw the loaded model
 		glm::mat4 model;
 		model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // Translate it down a bit so it's at the center of the scene
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// It's a bit too big for our scene, so scale it down
 		glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
 		ourModel.Draw(shader);
+
+		// Draw the lamps
+		lampShader.Use();
+		glUniformMatrix4fv(glGetUniformLocation(lampShader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(glGetUniformLocation(lampShader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		for (GLuint i = 0; i < 2; i++)
+		{
+			model = glm::mat4();
+			model = glm::translate(model, pointLightPositions[i]);
+			model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f)); // Downscale lamp object (a bit too large)
+			glUniformMatrix4fv(glGetUniformLocation(lampShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
+			lightBulb.Draw(lampShader);
+		}
 
 		// Swap the buffers
 		glfwSwapBuffers(window);
