@@ -74,7 +74,7 @@ int main()
 	Shader shader("lighting.vs", "lighting.frag");
 
 	// Load models
-	Model ourModel("Nanosuit/nanosuit2.obj");
+	Model ourModel("Nanosuit/Nanosuit.obj");
 
 	// Draw in wireframe
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
