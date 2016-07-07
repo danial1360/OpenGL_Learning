@@ -6,7 +6,7 @@
 #include <GL/glew.h>
 
 // GLFW
-#include <GLFW/glfw3.h>
+#include <GLFW\glfw3.h>
 
 // GL includes
 #include "Shader.h"

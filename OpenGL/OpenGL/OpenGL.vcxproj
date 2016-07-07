@@ -71,8 +71,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\GLFW;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\qnb10200.AFRC-FDCPB62\Source\Repos\OpenGL_Learning\OpenGL\OpenGL;C:\GLFW\GLFW;C:\GLFW\GL;C:\Users\qnb10200.AFRC-FDCPB62\Source\Repos\OpenGL_Learning\OpenGL\OpenGL\assimp;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\GLFW;C:\GL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\OpenGL\OpenGL;C:\GLFW\GLFW;C:\GL;..\OpenGL\assimp;C:\GL\include\GL;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
