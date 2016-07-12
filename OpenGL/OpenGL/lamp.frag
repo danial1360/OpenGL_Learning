@@ -1,6 +1,8 @@
 #version 330 core
- out vec4 outColor;
+in vec2 TexCoords;
+out vec4 color;
+uniform sampler2D screenTexture;
 void main()
 {
-outColor = vec4(0.04, 0.28, 0.26, 1.0);
+color = texture(screenTexture, TexCoords);
 }
