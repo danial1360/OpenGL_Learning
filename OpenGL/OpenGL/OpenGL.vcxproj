@@ -166,10 +166,10 @@
     <ClInclude Include="src\SOIL.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="lamp.frag" />
-    <None Include="lamp.vs" />
-    <None Include="lighting.frag" />
-    <None Include="lighting.vs" />
+    <None Include="shaders\advanced.frag" />
+    <None Include="shaders\advanced.vs" />
+    <None Include="shaders\skybox.frag" />
+    <None Include="shaders\skybox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

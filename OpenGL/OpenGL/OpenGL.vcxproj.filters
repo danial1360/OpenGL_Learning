@@ -40,16 +40,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lighting.vs">
+    <None Include="shaders\advanced.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="lighting.frag">
+    <None Include="shaders\advanced.vs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="lamp.vs">
+    <None Include="shaders\skybox.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="lamp.frag">
+    <None Include="shaders\skybox.vs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
