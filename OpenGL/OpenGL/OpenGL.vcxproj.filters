@@ -40,16 +40,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\advanced.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\advanced.vs">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="shaders\skybox.frag">
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\skybox.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\geometry.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\geometry.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\geometry.gs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

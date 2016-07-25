@@ -166,8 +166,9 @@
     <ClInclude Include="src\SOIL.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\advanced.frag" />
-    <None Include="shaders\advanced.vs" />
+    <None Include="shaders\geometry.frag" />
+    <None Include="shaders\geometry.gs" />
+    <None Include="shaders\geometry.vs" />
     <None Include="shaders\skybox.frag" />
     <None Include="shaders\skybox.vs" />
   </ItemGroup>
